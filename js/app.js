@@ -137,13 +137,14 @@ var view = {
       $($ul).append($li);
     });
     $mainInput.val('');
+    $('#add-button').removeClass('hide');
   },
 
   editMode: function (todo) {
     $todo = todo;
     var $save = document.createElement('i');
     var $actions = $($todo).find('.actions');
-
+    $('#add-button').addClass('hide');
     $($(todo)).addClass('todo-editing');
     $($todo).find('label').addClass('hidden');
     $($todo).find('.edit-input').removeClass('hidden').focus();
