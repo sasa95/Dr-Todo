@@ -4666,23 +4666,37 @@ input[type=range]:focus::-ms-fill-upper {
 .container {
   max-width: 600px; }
 
+.hidden {
+  display: none; }
+
 #main-input,
-#todo-list {
-  font-size: 1.8em;
+#todo-list,
+.todo label {
+  font-size: 1.8rem;
   color: #424242; }
 
 ul[id="todo-list"] li {
   position: relative;
   border-bottom: 1px solid #bdbdbd;
   padding: 15px; }
-  ul[id="todo-list"] li:hover .x-mark {
+  ul[id="todo-list"] li:hover .actions {
     visibility: visible; }
-
-.x-mark {
+ul[id="todo-list"] .actions {
   position: absolute;
   right: 0;
   vertical-align: middle;
-  visibility: hidden;
   cursor: pointer; }
+  ul[id="todo-list"] .actions i {
+    vertical-align: middle; }
+  ul[id="todo-list"] .actions .icon-edit {
+    margin-right: 15px; }
+ul[id="todo-list"] .edit-input {
+  margin-bottom: 0;
+  height: auto;
+  font-size: 1.8rem;
+  color: #424242; }
+  ul[id="todo-list"] .edit-input, ul[id="todo-list"] .edit-input:focus {
+    border-bottom: none;
+    box-shadow: none; }
 
 /*# sourceMappingURL=app.css.map */

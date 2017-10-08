@@ -2,9 +2,14 @@
   max-width: 600px;
 }
 
+.hidden {
+  display: none;
+}
+
 #main-input,
-#todo-list {
-  font-size: 1.8em;
+#todo-list,
+.todo label {
+  font-size: 1.8rem;
   color: color('grey', 'darken-3');
 }
 
@@ -14,16 +19,34 @@ ul[id="todo-list"] {
 		border-bottom: 1px solid color('grey', 'lighten-1');
 		padding: 15px;
 
-    &:hover .x-mark {
+    &:hover .actions {
       visibility: visible;
     }
 	}
-}
 
-  .x-mark {
+  .actions {
     position: absolute;
     right: 0;
     vertical-align: middle;
-    visibility: hidden;
     cursor: pointer;
+
+    i {
+      vertical-align: middle;
+    }
+
+    .icon-edit {
+      margin-right: 15px;
+    }
   }
+  
+    .edit-input {
+      margin-bottom: 0;
+      height: auto;
+      font-size: 1.8rem;
+      color: color('grey', 'darken-3');
+      &, &:focus {
+        border-bottom: none;
+        box-shadow: none
+      }
+    }
+}
