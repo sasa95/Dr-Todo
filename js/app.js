@@ -1,16 +1,6 @@
 var todoList = {
 	todos: [],
 
-	addTodo: function (title) {
-    if (title) {
-      this.todos.push({
-        title:title.trim(),
-        completed:false,
-        id: this.generateTodoId()
-      });
-    }	
-	},
-
   generateTodoId: function () {
     return (Math.floor(Math.random() * 4294967296)).toString();
   },
@@ -25,6 +15,31 @@ var todoList = {
     return checkboxID;
   },
 
+   getIndexByID: function (id) {
+    var result;
+
+    this.todos.forEach(function (element, index) {
+      if (element.id === id) {
+        result = index;
+      }  
+    });
+
+    return result;
+  },
+
+	addTodo: function (title) {
+    if (title) {
+      this.todos.push({
+        title:title.trim(),
+        completed:false,
+        id: this.generateTodoId()
+      });
+    }
+
+    view.displayTodos();
+    $('#main-input').val('').focus();
+	},
+
   deleteTodo: function (index) {
     todoList.todos.splice(index, 1);
     view.displayTodos();
@@ -36,14 +51,30 @@ var todoList = {
   },
 
   toggleCompleted: function (index) {
-    this.todos[index].completed = !this.todos[index].completed;
-    var allChecked = this.isEverythingChecked();
+    this.todos[index].completed = !this.todos[index].completed;  
+    view.displayTodos();
+  },
+
+  isEverythingChecked: function () {
+    var allChecked;
+
+    if (this.todos.length === 0) {
+      allChecked = false;
+    } else {
+        allChecked = true;
+        this.todos.forEach(function(element, index) {
+          if (!element.completed) {
+            allChecked = false;
+            return;
+          }
+      });
+    }
+
     if (allChecked) {
       $('#toggle-all').prop('checked', true);
     } else {
       $('#toggle-all').prop('checked', false);
     }
-    view.displayTodos();
   },
 
   toggleAll: function (isChecked) {
@@ -57,27 +88,6 @@ var todoList = {
       });
     }
     view.displayTodos();
-  },
-
-  isEverythingChecked: function () {
-    var allChecked = true;
-    this.todos.forEach(function(element, index) {
-      if (!element.completed) {
-        allChecked = false;
-        return;
-      }
-    });
-    return allChecked;
-  },
-
-  getIndexByID: function (id) {
-    var result;
-    this.todos.forEach(function (element, index) {
-      if (element.id === id) {
-        result = index;
-      }  
-    });
-    return result;
   }
 };
 
@@ -88,21 +98,6 @@ var eventListeners = {
     var $todoList = $('#todo-list');
     var $editInput = $('.edit-input');
 
-    $addButton.click(function() {
-      todoList.addTodo($mainInput.val());
-      $mainInput.val('').focus();
-      view.displayTodos();
-    });
-
-    $mainInput.keyup(function(event) {
-      if (event.which === 13) {
-        todoList.addTodo($mainInput.val());
-        view.displayTodos();  
-      } else if (event.which === 27) {
-        $(this).blur().val('');
-      }
-    });
-
     $mainInput.focusin(function() {
       $addButton.find('i').text('check');
     });
@@ -111,9 +106,21 @@ var eventListeners = {
       $addButton.find('i').text('add');
     });
 
+    $mainInput.keyup(function(event) {
+      if (event.which === 13) {
+        todoList.addTodo($mainInput.val());  
+      } else if (event.which === 27) {
+        $(this).blur().val('');
+      }
+    });
+
+    $addButton.click(function() {
+      todoList.addTodo($mainInput.val());
+    });
 
     $todoList.on('click', function(event) {
       $target = event.target;
+      
       if ($($target).hasClass('icon-delete')) {
         var id = $($target).parents('.todo').attr('id');
         var index = todoList.getIndexByID(id);
@@ -129,11 +136,12 @@ var eventListeners = {
         var $id = $($todo).attr('id');
         var $editInputText = $($todo).find('.edit-input').val();
         var index = todoList.getIndexByID($id);
+
         todoList.editTodo(index, $editInputText);
       }
     });
 
-    $todoList.on('keyup', '.edit-input', function(event) {
+    $todoList.on('keyup focusout', '.edit-input', function(event) {
       if (event.which === 13) {
 
         var id = $(this).parent().attr('id');
@@ -145,24 +153,22 @@ var eventListeners = {
         } else {
             todoList.deleteTodo(index);
         }
-      } else if (event.which === 27) {
-          view.displayTodos();
+      } else if (event.type === 'focusout' || event.which === 27) {
+          setTimeout(view.displayTodos, 100);
       }
-    });
-
-    $todoList.on('focusout', '.edit-input', function(event) {
-      setTimeout(view.displayTodos, 100);
     });
 
     $todoList.on('change', '.todo-checkbox', function(event) {
       $todo = $(this).parent();
       $todoId = $($todo).attr('id');
       $index = todoList.getIndexByID($todoId);
+
       todoList.toggleCompleted($index);
     });
 
     $('#toggle-all').on('change', function() {
       $isChecked = $(this).is(':checked');
+
       todoList.toggleAll($isChecked);
     });
   }
@@ -195,32 +201,28 @@ var view = {
       }
 
       $($label).attr('for', $checkboxID).text(element.title);
-
       $($deleteIcon).addClass('material-icons icon-delete').text('delete');
       $($editIcon).addClass('material-icons icon-edit').text('edit');
       $($actions).addClass('actions').append($editIcon).append($deleteIcon);
 
-      
       $($editInput).addClass('edit-input hidden').val(element.title);
       $($li).append($checkbox).append($label).append($editInput).append($actions).addClass('todo');
       $li.id = element.id;
       $($ul).append($li);
     });
+
     $mainInput.val('');
+    todoList.isEverythingChecked();
     $('#add-button').removeClass('hide');
-
-    if (todoList.todos.length == 0) {
-      $('#toggle-all').prop('checked', false);
-    }
-
   },
 
   editMode: function (todo) {
     $todo = todo;
     var $save = document.createElement('i');
     var $actions = $($todo).find('.actions');
+
     $('#add-button').addClass('hide');
-    $($(todo)).addClass('todo-editing');
+    $($todo).addClass('todo-editing');
     $($todo).find('label').addClass('hidden');
     $($todo).find('.edit-input').removeClass('hidden').focus();
     $($todo).find('.icon-edit').addClass('hidden');
@@ -228,7 +230,6 @@ var view = {
 
     $($save).addClass('material-icons icon-save').text('check_circle');
     $($actions).append($save);
-
   }
 };
 
