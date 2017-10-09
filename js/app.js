@@ -101,9 +101,7 @@ var eventListeners = {
             todoList.deleteTodo(index);
         }
       } else if (event.which === 27) {
-          $labelText = $(this).siblings('label').text();
-          $(this).val($labelText);
-          $(this).addClass('hidden');
+          view.displayTodos();
       }
     });
 
