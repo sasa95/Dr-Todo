@@ -3,7 +3,7 @@
 }
 
 .hidden {
-  display: none;
+  display: none!important;
 }
 
 #main-input,
@@ -18,11 +18,15 @@ ul[id="todo-list"] {
     position: relative;
 		border-bottom: 1px solid color('grey', 'lighten-1');
 		padding: 15px;
-
-    &:hover .actions {
-      visibility: visible;
-    }
 	}
+
+  input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+  }
+
+  label:before {
+    top: 2px;
+  }
 
   .actions {
     position: absolute;

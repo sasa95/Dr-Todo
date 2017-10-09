@@ -4667,7 +4667,7 @@ input[type=range]:focus::-ms-fill-upper {
   max-width: 600px; }
 
 .hidden {
-  display: none; }
+  display: none !important; }
 
 #main-input,
 #todo-list,
@@ -4679,8 +4679,10 @@ ul[id="todo-list"] li {
   position: relative;
   border-bottom: 1px solid #bdbdbd;
   padding: 15px; }
-  ul[id="todo-list"] li:hover .actions {
-    visibility: visible; }
+ul[id="todo-list"] input[type="checkbox"]:checked + label {
+  text-decoration: line-through; }
+ul[id="todo-list"] label:before {
+  top: 2px; }
 ul[id="todo-list"] .actions {
   position: absolute;
   right: 0;

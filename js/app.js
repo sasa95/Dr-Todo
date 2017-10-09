@@ -6,13 +6,23 @@ var todoList = {
       this.todos.push({
         title:title.trim(),
         completed:false,
-        id: this.generateId()
+        id: this.generateTodoId()
       });
     }	
 	},
 
-  generateId: function () {
+  generateTodoId: function () {
     return (Math.floor(Math.random() * 4294967296)).toString();
+  },
+
+  generateCheckboxId: function () {
+    var checkboxID = 'check-';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for(var i = 0; i < 16; i++) {
+      checkboxID += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return checkboxID;
   },
 
   deleteTodo: function (index) {
@@ -23,6 +33,41 @@ var todoList = {
   editTodo: function (index, title) {
     this.todos[index].title = title;
     view.displayTodos();
+  },
+
+  toggleCompleted: function (index) {
+    this.todos[index].completed = !this.todos[index].completed;
+    var allChecked = this.isEverythingChecked();
+    if (allChecked) {
+      $('#toggle-all').prop('checked', true);
+    } else {
+      $('#toggle-all').prop('checked', false);
+    }
+    view.displayTodos();
+  },
+
+  toggleAll: function (isChecked) {
+    if (isChecked) {
+      this.todos.forEach(function(element, index) {
+        element.completed = true;
+      });
+    } else {
+       this.todos.forEach(function(element, index) {
+        element.completed = false;
+      });
+    }
+    view.displayTodos();
+  },
+
+  isEverythingChecked: function () {
+    var allChecked = true;
+    this.todos.forEach(function(element, index) {
+      if (!element.completed) {
+        allChecked = false;
+        return;
+      }
+    });
+    return allChecked;
   },
 
   getIndexByID: function (id) {
@@ -108,6 +153,18 @@ var eventListeners = {
     $todoList.on('focusout', '.edit-input', function(event) {
       setTimeout(view.displayTodos, 100);
     });
+
+    $todoList.on('change', '.todo-checkbox', function(event) {
+      $todo = $(this).parent();
+      $todoId = $($todo).attr('id');
+      $index = todoList.getIndexByID($todoId);
+      todoList.toggleCompleted($index);
+    });
+
+    $('#toggle-all').on('change', function() {
+      $isChecked = $(this).is(':checked');
+      todoList.toggleAll($isChecked);
+    });
   }
 };
 
@@ -121,21 +178,37 @@ var view = {
       var $li = document.createElement('li');
       var $label = document.createElement('label');
       var $editInput = document.createElement('input');
+      var $checkbox = document.createElement('input');
       var $actions = document.createElement('span');
       var $deleteIcon = document.createElement('i');
       var $editIcon = document.createElement('i');
-      
+
+      var $checkboxID = todoList.generateCheckboxId();
+      $($checkbox).attr({
+        id: $checkboxID,
+        type: 'checkbox',
+        class: 'todo-checkbox'
+      });
+
+      if (element.completed) {
+        $($checkbox).prop('checked', true);
+      }
+
+      $($label).attr('for', $checkboxID).text(element.title);
+
       $($deleteIcon).addClass('material-icons icon-delete').text('delete');
       $($editIcon).addClass('material-icons icon-edit').text('edit');
       $($actions).addClass('actions').append($editIcon).append($deleteIcon);
-      $($label).text(element.title);
+
+      
       $($editInput).addClass('edit-input hidden').val(element.title);
-      $($li).append($label).append($editInput).append($actions).addClass('todo');
+      $($li).append($checkbox).append($label).append($editInput).append($actions).addClass('todo');
       $li.id = element.id;
       $($ul).append($li);
     });
     $mainInput.val('');
     $('#add-button').removeClass('hide');
+
   },
 
   editMode: function (todo) {
