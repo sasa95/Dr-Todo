@@ -209,6 +209,10 @@ var view = {
     $mainInput.val('');
     $('#add-button').removeClass('hide');
 
+    if (todoList.todos.length == 0) {
+      $('#toggle-all').prop('checked', false);
+    }
+
   },
 
   editMode: function (todo) {
