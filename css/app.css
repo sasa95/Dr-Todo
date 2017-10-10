@@ -4685,6 +4685,7 @@ ul[id="todo-list"] label:before {
   top: 2px; }
 ul[id="todo-list"] .actions {
   position: absolute;
+  top: 15px;
   right: 0;
   vertical-align: middle;
   cursor: pointer; }

@@ -30,15 +30,15 @@ var todoList = {
     return (Math.floor(Math.random() * 4294967296)).toString();
   },
 
-  generateCheckboxId: function () {
-    var checkboxID = 'check-';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  // generateCheckboxId: function () {
+  //   var checkboxID = 'check-';
+  //   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    for(var i = 0; i < 16; i++) {
-      checkboxID += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return checkboxID;
-  },
+  //   for(var i = 0; i < 16; i++) {
+  //     checkboxID += possible.charAt(Math.floor(Math.random() * possible.length));
+  //   }
+  //   return checkboxID;
+  // },
 
    getIndexByID: function (id) {
     var result;
@@ -236,36 +236,47 @@ var view = {
     var $ul = $('#todo-list');
     $ul.html('');
 
-    todos.forEach(function(element, index) {
-      var $li = document.createElement('li');
-      var $label = document.createElement('label');
-      var $editInput = document.createElement('input');
-      var $checkbox = document.createElement('input');
-      var $actions = document.createElement('span');
-      var $deleteIcon = document.createElement('i');
-      var $editIcon = document.createElement('i');
 
-      var $checkboxID = todoList.generateCheckboxId();
-      $($checkbox).attr({
-        id: $checkboxID,
-        type: 'checkbox',
-        class: 'todo-checkbox'
-      });
+    var todoTemplate = Handlebars.compile($('#todo-template').html());
+    $($ul).html(todoTemplate(todos));
+    
+    // todos.forEach(function(element, index) {
+    //     $('.edit-input').val(element.title)
+    // });
 
-      if (element.completed) {
-        $($checkbox).prop('checked', true);
-      }
 
-      $($label).attr('for', $checkboxID).text(element.title);
-      $($deleteIcon).addClass('material-icons icon-delete').text('delete');
-      $($editIcon).addClass('material-icons icon-edit').text('edit');
-      $($actions).addClass('actions').append($editIcon).append($deleteIcon);
 
-      $($editInput).addClass('edit-input hidden').val(element.title);
-      $($li).append($checkbox).append($label).append($editInput).append($actions).addClass('todo');
-      $li.id = element.id;
-      $($ul).append($li);
-    });
+    // todos.forEach(function(element, index) {
+    //   var id = element.id
+    //   var $li = document.createElement('li');
+    //   var $label = document.createElement('label');
+    //   var $editInput = document.createElement('input');
+    //   var $checkbox = document.createElement('input');
+    //   var $actions = document.createElement('span');
+    //   var $deleteIcon = document.createElement('i');
+    //   var $editIcon = document.createElement('i');
+
+    //   var $checkboxID = 'check-' +id;
+    //   $($checkbox).attr({
+    //     id: $checkboxID,
+    //     type: 'checkbox',
+    //     class: 'todo-checkbox'
+    //   });
+
+    //   if (element.completed) {
+    //     $($checkbox).prop('checked', true);
+    //   }
+
+    //   $($label).attr('for', $checkboxID).text(element.title);
+    //   $($deleteIcon).addClass('material-icons icon-delete').text('delete');
+    //   $($editIcon).addClass('material-icons icon-edit').text('edit');
+    //   $($actions).addClass('actions').append($editIcon).append($deleteIcon);
+
+    //   $($editInput).addClass('edit-input hidden').val(element.title);
+    //   $($li).append($checkbox).append($label).append($editInput).append($actions).addClass('todo');
+    //   $li.id = id;
+    //   $($ul).append($li);
+    // });
 
     $mainInput.val('');
     todoList.isEverythingChecked(todos);
@@ -275,13 +286,14 @@ var view = {
 
   editMode: function (todo) {
     $todo = todo;
+    $label = $($todo).find('label');
     var $save = document.createElement('i');
     var $actions = $($todo).find('.actions');
 
     $('#add-button').addClass('hide');
     $($todo).addClass('todo-editing');
-    $($todo).find('label').addClass('hidden');
-    $($todo).find('.edit-input').removeClass('hidden').focus();
+    $($label).addClass('hidden');
+    $($todo).find('.edit-input').removeClass('hidden').val($($label).text()).focus();
     $($todo).find('.icon-edit').addClass('hidden');
     $($todo).find('.icon-delete').addClass('hidden');
 
