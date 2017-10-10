@@ -1,5 +1,23 @@
+// 1. nema nicega u memoriji ---> setuj niz na [] i vrati u todo
+// 2. ima necega u memoriji  ---> getuj iz memorije i vrati u todo
+
+var storeAndLoad = {
+  store: function (data) {
+    localStorage.setItem('todos',JSON.stringify(data));
+  },
+
+  load: function () {
+    var todos = JSON.parse(localStorage.getItem('todos'))
+    if (todos) {
+      return todos;
+    } else {
+      return []; 
+    }
+  }
+}
+
 var todoList = {
-	todos: [],
+	// todos: [],
 
   generateTodoId: function () {
     return (Math.floor(Math.random() * 4294967296)).toString();
@@ -214,6 +232,7 @@ var view = {
     $mainInput.val('');
     todoList.isEverythingChecked();
     $('#add-button').removeClass('hide');
+    storeAndLoad.store(todoList.todos);
   },
 
   editMode: function (todo) {
@@ -234,3 +253,5 @@ var view = {
 };
 
 eventListeners.addListeners();
+todoList.todos = storeAndLoad.load();
+view.displayTodos();
