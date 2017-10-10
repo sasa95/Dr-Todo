@@ -8,23 +8,37 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="center-align">Dr Todo</h1>
-    <input id="main-input" type="text" placeholder="What is your task?" autofocus>
-    <div class="toggle-all-container center-align">
-      <input type="checkbox" id="toggle-all">
-      <label for="toggle-all">Toggle All</label>
-    </div>
-    
-    <ul id="todo-list">
-    </ul>
+    <main>
+      <h1 class="center-align">Dr Todo</h1>
+      <input id="main-input" type="text" placeholder="What is your task?" autofocus>
+      <div class="toggle-all-container center-align">
+        <input type="checkbox" id="toggle-all">
+        <label for="toggle-all">Toggle All</label>
+      </div>
+      
+      <ul id="todo-list">
+      </ul>
 
-
+      
+      <footer>
+        <div class="center-align">
+          <nav>
+            <ul class="filters">
+              <li><a class="filter-active" href="#/all">All</a></li>
+              <li><a href="#/active">Active</a></li>
+              <li><a href="#/completed">Completed</a></li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+      
+    </main>
 
     <div id="add-button" class="fixed-action-btn">
-      <a class="btn-floating btn-large red">
-        <i class="large material-icons">add</i>
-      </a>
-    </div>
+        <a class="btn-floating btn-large red">
+          <i class="large material-icons">add</i>
+        </a>
+      </div>
   </div>
 
 
@@ -37,6 +51,7 @@
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="js/materialize.min.js"></script>
+  <script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

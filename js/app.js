@@ -1,6 +1,3 @@
-// 1. nema nicega u memoriji ---> setuj niz na [] i vrati u todo
-// 2. ima necega u memoriji  ---> getuj iz memorije i vrati u todo
-
 var storeAndLoad = {
   store: function (data) {
     localStorage.setItem('todos',JSON.stringify(data));
@@ -16,8 +13,18 @@ var storeAndLoad = {
   }
 }
 
+var router = {
+  init: function () {
+    new Router({
+      '/:filter': function (filter) {
+        todoList.filter = filter;
+        view.displayTodos();
+      }
+    }).init('/all');
+  }
+};
+
 var todoList = {
-	// todos: [],
 
   generateTodoId: function () {
     return (Math.floor(Math.random() * 4294967296)).toString();
@@ -73,14 +80,14 @@ var todoList = {
     view.displayTodos();
   },
 
-  isEverythingChecked: function () {
+  isEverythingChecked: function (todos) {
     var allChecked;
 
-    if (this.todos.length === 0) {
+    if (todos.length === 0) {
       allChecked = false;
     } else {
         allChecked = true;
-        this.todos.forEach(function(element, index) {
+        todos.forEach(function(element, index) {
           if (!element.completed) {
             allChecked = false;
             return;
@@ -106,6 +113,30 @@ var todoList = {
       });
     }
     view.displayTodos();
+  },
+
+  getFilteredTodos: function () {
+    if (this.filter === 'active') {
+      return this.getActiveTodos();
+    }
+
+    if (this.filter === 'completed') {
+      return this.getCompletedTodos();
+    }
+
+    return this.todos;
+  },
+
+  getActiveTodos: function () {
+    return this.todos.filter(function(todo) {
+      return !todo.completed;
+    });
+  },
+
+  getCompletedTodos: function () {
+    return this.todos.filter(function(todo) {
+      return todo.completed;
+    });
   }
 };
 
@@ -189,16 +220,23 @@ var eventListeners = {
 
       todoList.toggleAll($isChecked);
     });
+
+    $('ul.filters').on('click', 'a', function(event) {
+      $target = event.target;
+      $('.filter-active').removeClass();
+      $($target).addClass('filter-active')
+    });
   }
 };
 
 var view = {
   displayTodos: function () {
+    var todos = todoList.getFilteredTodos();
     var $mainInput = $('#main-input');
     var $ul = $('#todo-list');
     $ul.html('');
 
-    todoList.todos.forEach(function(element, index) {
+    todos.forEach(function(element, index) {
       var $li = document.createElement('li');
       var $label = document.createElement('label');
       var $editInput = document.createElement('input');
@@ -230,7 +268,7 @@ var view = {
     });
 
     $mainInput.val('');
-    todoList.isEverythingChecked();
+    todoList.isEverythingChecked(todos);
     $('#add-button').removeClass('hide');
     storeAndLoad.store(todoList.todos);
   },
@@ -252,6 +290,6 @@ var view = {
   }
 };
 
-eventListeners.addListeners();
 todoList.todos = storeAndLoad.load();
-view.displayTodos();
+router.init();
+eventListeners.addListeners();

@@ -4701,4 +4701,16 @@ ul[id="todo-list"] .edit-input {
     border-bottom: none;
     box-shadow: none; }
 
+.filters li {
+  display: inline-block; }
+  .filters li:nth-child(2) {
+    margin: 0 25px; }
+  .filters li a {
+    display: inline-block;
+    padding: 2px 5px;
+    color: #009688; }
+
+.filter-active {
+  border: 1px solid #bdbdbd; }
+
 /*# sourceMappingURL=app.css.map */
