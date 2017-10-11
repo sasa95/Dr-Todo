@@ -4702,6 +4702,19 @@ ul[id="todo-list"] .edit-input {
     border-bottom: none;
     box-shadow: none; }
 
+footer {
+  position: relative; }
+
+#items-left,
+#clear-completed {
+  position: absolute;
+  bottom: 0;
+  color: #9e9e9e; }
+
+#clear-completed {
+  top: 2px;
+  right: 0; }
+
 .filters li {
   display: inline-block; }
   .filters li:nth-child(2) {

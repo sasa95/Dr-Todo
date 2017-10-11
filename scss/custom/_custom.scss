@@ -56,19 +56,34 @@ ul[id="todo-list"] {
     }
 }
 
-.filters li {
-  display: inline-block;
-  &:nth-child(2) {
-    margin: 0 25px;
-  }
-
-  a {
-    display: inline-block;
-    padding: 2px 5px;
-    color: color('teal', 'base');
-  }
+footer {
+  position: relative;
 }
-
-  .filter-active {
-    border: 1px solid color('grey', 'lighten-1');
+  #items-left,
+  #clear-completed {
+    position: absolute;
+    bottom: 0;
+    color: color('grey', 'base');
   }
+
+  #clear-completed {
+    top: 2px;
+    right: 0;
+  }
+
+  .filters li {
+    display: inline-block;
+    &:nth-child(2) {
+      margin: 0 25px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 2px 5px;
+      color: color('teal', 'base');
+    }
+  }
+
+    .filter-active {
+      border: 1px solid color('grey', 'lighten-1');
+    }

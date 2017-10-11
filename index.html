@@ -11,7 +11,7 @@
     <main>
       <h1 class="center-align">Dr Todo</h1>
       <input id="main-input" type="text" placeholder="What is your task?" autofocus>
-      <div class="toggle-all-container center-align">
+      <div class="toggle-all-container center-align hidden">
         <input type="checkbox" id="toggle-all">
         <label for="toggle-all">Toggle All</label>
       </div>
@@ -20,18 +20,8 @@
       </ul>
 
       
-      <footer>
-        <div class="center-align">
-          <nav>
-            <ul class="filters">
-              <li><a class="filter-active" href="#/all">All</a></li>
-              <li><a href="#/active">Active</a></li>
-              <li><a href="#/completed">Completed</a></li>
-            </ul>
-          </nav>
-        </div>
+      <footer id="todo-footer">
       </footer>
-      
     </main>
 
     <div id="add-button" class="fixed-action-btn">
@@ -57,9 +47,21 @@
     {{/this}}
   </script>
 
- 
-
-
+  <script id="footer-template" type="text/x-handlebars-template">
+    {{#istrue allTodos}}
+    <span id="items-left">{{activeTodos}}</span>
+    <div class="center-align">
+      <nav>
+        <ul class="filters">
+          <li><a {{#eq filter 'all'}}class="filter-active"{{/eq}} href="#/all">All</a></li>
+          <li><a {{#eq filter 'active'}}class="filter-active"{{/eq}} href="#/active">Active</a></li>
+          <li><a {{#eq filter 'completed'}}class="filter-active"{{/eq}} href="#/completed">Completed</a></li>
+        </ul>
+      </nav>
+    </div>
+    {{#istrue completedTodos}}<a id="clear-completed" href="#">Clear completed</a>{{/istrue}}
+    {{/istrue}}
+  </script>
 
 
 
