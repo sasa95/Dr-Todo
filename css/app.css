@@ -4707,17 +4707,26 @@ footer {
 
 #filters-container {
   position: relative;
-  top: 30px; }
+  top: 55px; }
+  @media only screen and (min-width: 601px) {
+    #filters-container {
+      bottom: 30px; } }
 
 #items-left,
 #clear-completed {
   position: absolute;
-  bottom: 0;
   color: #9e9e9e; }
+  @media only screen and (min-width: 601px) {
+    #items-left,
+    #clear-completed {
+      bottom: 0; } }
 
 #clear-completed {
-  top: 2px;
-  right: 0; }
+  top: 20px; }
+  @media only screen and (min-width: 601px) {
+    #clear-completed {
+      top: 2px;
+      right: 0; } }
 
 .filters li {
   display: inline-block; }

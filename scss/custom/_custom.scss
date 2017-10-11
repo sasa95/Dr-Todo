@@ -62,19 +62,27 @@ footer {
 
 #filters-container {
   position: relative;
-  top: 30px;
+  top: 55px;
+  @media #{$medium-and-up} {
+    bottom: 30px;
+  }
 }
 
   #items-left,
   #clear-completed {
     position: absolute;
-    bottom: 0;
     color: color('grey', 'base');
+    @media #{$medium-and-up} {
+      bottom: 0;
+    }
   }
 
   #clear-completed {
-    top: 2px;
-    right: 0;
+    top: 20px;
+     @media #{$medium-and-up} {
+      top: 2px;
+      right: 0;
+    }
   }
 
   .filters li {
