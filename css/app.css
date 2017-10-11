@@ -4705,6 +4705,10 @@ ul[id="todo-list"] .edit-input {
 footer {
   position: relative; }
 
+#filters-container {
+  position: relative;
+  top: 30px; }
+
 #items-left,
 #clear-completed {
   position: absolute;
@@ -4718,7 +4722,7 @@ footer {
 .filters li {
   display: inline-block; }
   .filters li:nth-child(2) {
-    margin: 0 25px; }
+    margin: 0 5px; }
   .filters li a {
     display: inline-block;
     padding: 2px 5px;

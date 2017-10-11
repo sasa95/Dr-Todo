@@ -59,6 +59,12 @@ ul[id="todo-list"] {
 footer {
   position: relative;
 }
+
+#filters-container {
+  position: relative;
+  top: 30px;
+}
+
   #items-left,
   #clear-completed {
     position: absolute;
@@ -74,7 +80,8 @@ footer {
   .filters li {
     display: inline-block;
     &:nth-child(2) {
-      margin: 0 25px;
+      // margin: 0 25px;
+      margin: 0 5px;
     }
 
     a {

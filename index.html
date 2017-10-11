@@ -50,7 +50,7 @@
   <script id="footer-template" type="text/x-handlebars-template">
     {{#istrue allTodos}}
     <span id="items-left">{{activeTodos}}</span>
-    <div class="center-align">
+    <div id="filters-container" class="center-align">
       <nav>
         <ul class="filters">
           <li><a {{#eq filter 'all'}}class="filter-active"{{/eq}} href="#/all">All</a></li>
