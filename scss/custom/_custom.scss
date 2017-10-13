@@ -13,7 +13,7 @@
   color: color('grey', 'darken-3');
 }
 
-ul[id="todo-list"] {
+#todo-list {
 	li {
     position: relative;
 		border-bottom: 1px solid color('grey', 'lighten-1');

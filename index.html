@@ -16,22 +16,17 @@
         <label for="toggle-all">Toggle All</label>
       </div>
       
-      <ul id="todo-list">
-      </ul>
+      <ul id="todo-list"></ul>
 
-      
-      <footer id="todo-footer">
-      </footer>
+      <footer id="todo-footer"></footer>
     </main>
 
     <div id="add-button" class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
-          <i class="large material-icons">add</i>
-        </a>
-      </div>
+      <a class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+      </a>
+    </div>
   </div>
-
-
 
   <script id="todo-template" type="text/x-handlebars-template">
     {{#this}}
@@ -62,8 +57,6 @@
     {{#istrue completedTodos}}<a id="clear-completed" href="#">Clear completed</a>{{/istrue}}
     {{/istrue}}
   </script>
-
-
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="js/materialize.min.js"></script>

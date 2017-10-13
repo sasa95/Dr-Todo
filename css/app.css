@@ -4675,30 +4675,30 @@ input[type=range]:focus::-ms-fill-upper {
   font-size: 1.8rem;
   color: #424242; }
 
-ul[id="todo-list"] li {
+#todo-list li {
   position: relative;
   border-bottom: 1px solid #bdbdbd;
   padding: 15px; }
-ul[id="todo-list"] input[type="checkbox"]:checked + label {
+#todo-list input[type="checkbox"]:checked + label {
   text-decoration: line-through; }
-ul[id="todo-list"] label:before {
+#todo-list label:before {
   top: 2px; }
-ul[id="todo-list"] .actions {
+#todo-list .actions {
   position: absolute;
   top: 15px;
   right: 0;
   vertical-align: middle;
   cursor: pointer; }
-  ul[id="todo-list"] .actions i {
+  #todo-list .actions i {
     vertical-align: middle; }
-  ul[id="todo-list"] .actions .icon-edit {
+  #todo-list .actions .icon-edit {
     margin-right: 15px; }
-ul[id="todo-list"] .edit-input {
+#todo-list .edit-input {
   margin-bottom: 0;
   height: auto;
   font-size: 1.8rem;
   color: #424242; }
-  ul[id="todo-list"] .edit-input, ul[id="todo-list"] .edit-input:focus {
+  #todo-list .edit-input, #todo-list .edit-input:focus {
     border-bottom: none;
     box-shadow: none; }
 
